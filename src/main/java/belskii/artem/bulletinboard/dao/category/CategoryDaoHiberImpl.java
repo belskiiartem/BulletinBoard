@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 import antlr.collections.List;
 
@@ -66,6 +67,24 @@ public class CategoryDaoHiberImpl implements CategoryDao{
 			session.close();
 		}
 		return id;
+	}
+
+	@Override
+	public Long findCategory(String categoryTitle) {
+		Transaction transaction = null;
+		Session session = null;
+		Category category=null;
+		try {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			category=(Category) session.createCriteria(Category.class).add(Restrictions.eq("categoryTitle", categoryTitle)).uniqueResult(); 
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return category.getId();
 	}
 
 }

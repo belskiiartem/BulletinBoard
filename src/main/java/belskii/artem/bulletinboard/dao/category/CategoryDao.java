@@ -6,4 +6,5 @@ public interface CategoryDao {
 	public ArrayList<Category> getAllCategories();
 	public Long AddCategories(String title);
 	public String removeCategories(Long id);
+	public Long findCategory(String categoryTitle);
 }

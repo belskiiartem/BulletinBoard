@@ -19,7 +19,6 @@ public class CategoryDaoHiberImplTest {
 	public void testAddCategories() {
 		CategoryDaoHiberImpl category = new CategoryDaoHiberImpl();
 		Random random = new Random();
-		
 		assertTrue(category.AddCategories("category"+random.nextInt())>0);
 		
 	}
@@ -28,6 +27,12 @@ public class CategoryDaoHiberImplTest {
 	public void testRemoveCategories() {
 		CategoryDaoHiberImpl category = new CategoryDaoHiberImpl();
 		assertEquals(category.getAllCategories().get(0).getCategoryTitle(), category.removeCategories(1L));
+	}
+	
+	@Test
+	public void testFindCategory(){
+		CategoryDaoHiberImpl category = new CategoryDaoHiberImpl();
+		assertTrue(category.findCategory("one")>0);
 	}
 
 }
