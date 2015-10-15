@@ -4,7 +4,7 @@ import antlr.collections.List;
 
 public class AdvertisementDaoHiberImpl implements AdvertisementDao{
 
-	public void addAdvertisement(String title, String body) {
+	public void addAdvertisement(String title, String body, Long categoryId) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,9 +1,9 @@
 package belskii.artem.bulletinboard.dao.category;
 
-import antlr.collections.List;
+import java.util.ArrayList;
 
 public interface CategoryDao {
-	public List getAllCategorues();
-	public void AddCategorues(String title);
-	public void removeCategories(Long id);
+	public ArrayList<Category> getAllCategories();
+	public Long AddCategories(String title);
+	public String removeCategories(Long id);
 }
