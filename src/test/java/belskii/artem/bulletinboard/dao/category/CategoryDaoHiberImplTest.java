@@ -2,6 +2,8 @@ package belskii.artem.bulletinboard.dao.category;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
+
 import org.junit.Test;
 
 public class CategoryDaoHiberImplTest {
@@ -16,8 +18,10 @@ public class CategoryDaoHiberImplTest {
 	@Test
 	public void testAddCategories() {
 		CategoryDaoHiberImpl category = new CategoryDaoHiberImpl();
-		assertTrue(category.AddCategories("Ïğîäàæà")>0);
-		assertTrue(category.AddCategories("Ïîêóïêà")>0);
+		Random random = new Random();
+		
+		assertTrue(category.AddCategories("category"+random.nextInt())>0);
+		
 	}
 
 	@Test
