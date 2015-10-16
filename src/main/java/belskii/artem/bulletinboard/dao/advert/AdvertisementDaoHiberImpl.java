@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 import antlr.collections.List;
 import belskii.artem.bulletinboard.dao.category.Category;
@@ -31,8 +32,6 @@ public class AdvertisementDaoHiberImpl implements AdvertisementDao{
 			advert.setAdvertText(body);
 			advert.setAdvertTitle(title);
 			advert.setUserId(userId);
-			
-			System.out.println(advert.getAdvertText());
 			id=(Long) session.save(advert);
 			transaction.commit();
 		} catch (Exception e) {
@@ -62,16 +61,44 @@ public class AdvertisementDaoHiberImpl implements AdvertisementDao{
 
 	}
 
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+	public boolean delete(Long id) {
+		boolean result=true;
+		Transaction transaction = null;
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			Advert advert = session.get(Advert.class, id);
+			session.delete(advert);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+			result=false;
+		} finally {
+			session.close();
+		}
+
+		return result;
 	}
 
 	public ArrayList<Advert> getFiltered(String usermail) {
 		UserDao user = new UserDaoImplHiber();
 		Long userId=user.findUser(usermail).getId();
 		
-		return null;
+		Transaction transaction = null;
+		Session session = null;
+		ArrayList<Advert> filteredAdvertList =null;
+		try {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			filteredAdvertList = (ArrayList<Advert>) session.createCriteria(Advert.class).add(Restrictions.eq("userId", userId)).list();
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return filteredAdvertList;
 	}
 
 }

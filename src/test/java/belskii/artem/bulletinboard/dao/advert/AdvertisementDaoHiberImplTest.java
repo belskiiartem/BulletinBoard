@@ -29,7 +29,8 @@ public class AdvertisementDaoHiberImplTest {
 
 	@Test
 	public void testDelete() {
-		fail("Not yet implemented");
+		AdvertisementDaoHiberImpl advertisement = new AdvertisementDaoHiberImpl ();
+		assertTrue(advertisement.delete(23L));	
 	}
 
 	@Test
