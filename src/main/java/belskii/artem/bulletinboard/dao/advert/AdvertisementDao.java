@@ -1,10 +1,10 @@
 package belskii.artem.bulletinboard.dao.advert;
 
-import antlr.collections.List;
+import java.util.ArrayList;
 
 public interface AdvertisementDao {
-	public Long addAdvertisement(String title, String body, String categoryTitle);
-	public List getAll();
+	public Long addAdvertisement(Long userId, String title, String body, String categoryTitle);
+	public ArrayList<Advert> getAll();
 	public void delete(Long id);
-	public List getFiltered(String usermail);
+	public ArrayList<Advert> getFiltered(String usermail);
 }

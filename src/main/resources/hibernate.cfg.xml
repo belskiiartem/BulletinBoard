@@ -16,6 +16,8 @@
     <property name="dialect">org.hibernate.dialect.PostgreSQL92Dialect</property>
     <property name="hbm2ddl.auto">update</property>
     <mapping class="belskii.artem.bulletinboard.dao.category.Category"/>
+    <mapping class="belskii.artem.bulletinboard.dao.advert.Advert"/>
+    <mapping class="belskii.artem.bulletinboard.dao.user.User"/>
     
   </session-factory>
 

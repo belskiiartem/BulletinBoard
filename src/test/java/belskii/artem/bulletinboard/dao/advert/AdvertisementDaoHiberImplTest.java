@@ -3,6 +3,7 @@ package belskii.artem.bulletinboard.dao.advert;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import belskii.artem.bulletinboard.dao.category.Category;
 
@@ -11,13 +12,19 @@ public class AdvertisementDaoHiberImplTest {
 	@Test
 	public void testAddAdvertisement() {
 		AdvertisementDaoHiberImpl advertisement = new AdvertisementDaoHiberImpl ();
-		assertTrue(advertisement.addAdvertisement("pink elephant", "Buy new pink elephant, with low price!", "Покупка")>0);
-		
+		assertTrue(advertisement.addAdvertisement(Long.valueOf(1), "pink elephant", "Buy new pink elephant, with low price!", "one")>0);
+	}
+	
+	@Test(expected=java.lang.NoSuchMethodError.class)
+	public void testaddTooSmoolValue() {
+		AdvertisementDaoHiberImpl advertisement = new AdvertisementDaoHiberImpl ();
+		advertisement.addAdvertisement(Long.valueOf(1), "smool", "too smool!", "one");
 	}
 
 	@Test
 	public void testGetAll() {
-		fail("Not yet implemented");
+		AdvertisementDaoHiberImpl advertisement = new AdvertisementDaoHiberImpl ();
+		assertTrue(advertisement.getAll().size()>0);
 	}
 
 	@Test
@@ -27,7 +34,8 @@ public class AdvertisementDaoHiberImplTest {
 
 	@Test
 	public void testGetFiltered() {
-		fail("Not yet implemented");
+		AdvertisementDaoHiberImpl advertisement = new AdvertisementDaoHiberImpl ();
+		assertTrue(advertisement.getFiltered("belskiiartem@gmail.com").size()>0);
 	}
 
 }

@@ -13,32 +13,19 @@ public class Advert {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	private String AuthorFirstName;
-	private String authorLastname;
+	private long userId;
 	private Date publishDate=new Date();
 	@Size(min = 10, max = 30)
 	private String advertTitle;
 	@Size(min = 20, max = 400)
 	private String advertText;
 	private Long categoryId;
-	
+
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	public String getAuthorFirstName() {
-		return AuthorFirstName;
-	}
-	public void setAuthorFirstName(String authorFirstName) {
-		AuthorFirstName = authorFirstName;
-	}
-	public String getAuthorLastname() {
-		return authorLastname;
-	}
-	public void setAuthorLastname(String authorLastname) {
-		this.authorLastname = authorLastname;
 	}
 	public Date getPublishDate() {
 		return publishDate;
@@ -63,5 +50,11 @@ public class Advert {
 	}
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
+	}
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 }

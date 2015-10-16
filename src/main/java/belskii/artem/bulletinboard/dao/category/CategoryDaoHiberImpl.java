@@ -50,7 +50,7 @@ public class CategoryDaoHiberImpl implements CategoryDao{
 		return removedCategory;		
 	}
 
-	public Long AddCategories(String title) {
+	public Long addCategories(String title) {
 		Transaction transaction = null;
 		Session session = null;
 		Category category = new Category();

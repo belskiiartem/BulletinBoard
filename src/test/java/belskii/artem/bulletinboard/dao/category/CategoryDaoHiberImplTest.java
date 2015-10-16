@@ -19,7 +19,7 @@ public class CategoryDaoHiberImplTest {
 	public void testAddCategories() {
 		CategoryDaoHiberImpl category = new CategoryDaoHiberImpl();
 		Random random = new Random();
-		assertTrue(category.AddCategories("category"+random.nextInt())>0);
+		assertTrue(category.addCategories("category"+random.nextInt())>0);
 		
 	}
 
