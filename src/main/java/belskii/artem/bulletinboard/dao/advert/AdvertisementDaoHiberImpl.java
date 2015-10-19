@@ -18,9 +18,8 @@ import belskii.artem.bulletinboard.dao.user.UserDaoImplHiber;
 public class AdvertisementDaoHiberImpl implements AdvertisementDao{
 	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-	public Long addAdvertisement(Long userId, String title, String body, String categoryTitle) {
+	public Long addAdvertisement(Long userId, String title, String body, Long categoryId) {
 		CategoryDao category = new CategoryDaoHiberImpl();
-		Long categoryId=category.findCategory(categoryTitle);
 		Transaction transaction = null;
 		Session session = null;
 		Long id=-1L;

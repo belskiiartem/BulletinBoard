@@ -18,7 +18,7 @@
 	</c:forEach>
 	
 	</table>
-<form action="./createNew" method="POST">
+<form action="./createNew" method="GET">
 	 	 <p><h2>You can add new advertisement</h2></p>
 	 	<input type="submit" value="submit">
 </form>
