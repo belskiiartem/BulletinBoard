@@ -16,6 +16,7 @@ Choice category:
 <p><input type="text" max="16"  name="title" size="50px">
 <p>Put advertisement body:
 <p><textarea name="body" ROWS="5" cols="50"></textarea>
- <p><input type="submit" value="Create!">
+ <p><input type="submit" value="Create!"></p>
+ </form>
 </body>
 </html>

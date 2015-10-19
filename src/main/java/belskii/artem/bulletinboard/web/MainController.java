@@ -31,14 +31,17 @@ public class MainController {
 	public ModelAndView authorize(@ModelAttribute("email") String email, HttpServletResponse response){
 		response.addCookie(new Cookie("email", email));
 		String userZone="userHome";
+		ModelAndView modelAndView = new ModelAndView();
+		
 		if(!user.checkUser(email)){
 			userZone="newUser";
+		} else{
+			modelAndView.addObject("firstName", user.getFirstName(email));
+			modelAndView.addObject("lastName", user.getLastName(email));
+			modelAndView.addObject("myAdvertisement", advertisement.getFiltered(email));
 		}
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("userHome");
-		modelAndView.addObject("firstName", user.getFirstName(email));
-		modelAndView.addObject("lastName", user.getLastName(email));
-		modelAndView.addObject("myAdvertisement", advertisement.getFiltered(email));
+		modelAndView.addObject("email", email);
+		modelAndView.setViewName(userZone);
 		return modelAndView;
 	}
 
@@ -99,7 +102,12 @@ public class MainController {
 		return modewlAndView;
 	}
 	
-
+	@RequestMapping(path="/newUser", method=RequestMethod.POST)
+	public String createNewUser(@ModelAttribute("firstName") String firstName, @ModelAttribute("lastName") String lastName, @ModelAttribute("email") String email){
+		user.addUser(firstName, lastName, email);
+		return "index";
+		
+	}
 	private String getEmail(HttpServletRequest request){
 		String email="";
 		Cookie[] cookies = request.getCookies();
