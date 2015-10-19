@@ -3,11 +3,30 @@
 
 <html>
 <body>
-<form action="./userzone" method="POST">
-	 <h2>Hello! On bulletin board!</h2>
-	 <p><h2>You can use your email address as login:</h2></p>
-	 <input type="text" max="16"  name="cardId" size="20px"> <br>
-	<input type="submit" value="submit">
+	 <h2>Hello! <c:out value="${firstName}"/> <c:out value="${lastName}"/></h2>
+	 You current advertisement:
+	<table border='1'>
+	<tr>
+		<td>Id</td><td>Title</td><td>Message</td><td>Category</td><td>Publication date</td>
+	</tr>
+	<c:forEach var="advertisement" items="${myAdvertisement}" varStatus="loop">
+	<tr>
+		<td><c:out value="${advertisement.id}"/></td><td><c:out value="${advertisement.advertTitle}"/></td><td><c:out value="${advertisement.advertText}"/></td>
+		<td><c:out value="${advertisement.categoryId}"/></td><td><c:out value="${advertisement.publishDate}"/></td>
+	</tr>
+    
+	</c:forEach>
+	
+	</table>
+<form action="./createNew" method="POST">
+	 	 <p><h2>You can add new advertisement</h2></p>
+	 	<input type="submit" value="submit">
+</form>
+
+<form action="./createNew" method="POST">
+	 	 <p><h2>or delete exist. (you should put id)</h2></p>
+	 	 <input pype="text" name="deleteId" max="16">
+	 	<input type="submit" value="submit">
 </form>
 
 </body>
