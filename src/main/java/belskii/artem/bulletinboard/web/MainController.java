@@ -70,6 +70,36 @@ public class MainController {
 		return "index";		
 	
 	}
+	
+	@RequestMapping(path="/delete", method=RequestMethod.POST)
+	public ModelAndView confirmTheDeletion(HttpServletRequest request, @ModelAttribute("deleteId") Long deleteId){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("confirmTheDeletion");
+		modelAndView.addObject("deleteId", deleteId);
+		modelAndView.addObject("title", advertisement.getById(deleteId).getAdvertTitle());
+		modelAndView.addObject("body", advertisement.getById(deleteId).getAdvertText());
+		modelAndView.addObject("category", advertisement.getById(deleteId).getCategoryId());
+		return modelAndView;
+		
+	}
+
+	@RequestMapping(path="/confirm", method=RequestMethod.POST)
+	public ModelAndView confirm(HttpServletRequest request, @ModelAttribute("confirm") String confirm, @ModelAttribute("deleteId") Long deleteId,
+			@ModelAttribute("category") String category){
+		String resultMessage="This advertisment will be save...";
+		if (confirm.equals("delete") &  
+			user.findUser(this.getEmail(request)).getId() == advertisement.getById(deleteId).getUserId())
+		{
+			advertisement.delete(deleteId);
+			resultMessage="Your advertisment removed";
+		}
+		ModelAndView modewlAndView = new ModelAndView();
+		modewlAndView.setViewName("resultPage");
+		modewlAndView.addObject("resultMessage", resultMessage);
+		return modewlAndView;
+	}
+	
+
 	private String getEmail(HttpServletRequest request){
 		String email="";
 		Cookie[] cookies = request.getCookies();

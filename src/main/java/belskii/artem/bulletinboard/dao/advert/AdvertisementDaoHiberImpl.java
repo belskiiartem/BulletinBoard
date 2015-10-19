@@ -100,4 +100,22 @@ public class AdvertisementDaoHiberImpl implements AdvertisementDao{
 		return filteredAdvertList;
 	}
 
+	@Override
+	public Advert getById(Long advertId) {
+		Transaction transaction = null;
+		Session session = null;
+		Advert advert  =null;
+		try {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			advert= session.get(Advert.class, advertId);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return advert;
+	}
+
 }

@@ -7,4 +7,5 @@ public interface AdvertisementDao {
 	public ArrayList<Advert> getAll();
 	public boolean delete(Long id);
 	public ArrayList<Advert> getFiltered(String usermail);
+	public Advert getById(Long advertId);
 }

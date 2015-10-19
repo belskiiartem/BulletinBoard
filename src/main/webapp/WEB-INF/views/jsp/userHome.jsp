@@ -23,7 +23,7 @@
 	 	<input type="submit" value="submit">
 </form>
 
-<form action="./createNew" method="POST">
+<form action="./delete" method="POST">
 	 	 <p><h2>or delete exist. (you should put id)</h2></p>
 	 	 <input pype="text" name="deleteId" max="16">
 	 	<input type="submit" value="submit">
