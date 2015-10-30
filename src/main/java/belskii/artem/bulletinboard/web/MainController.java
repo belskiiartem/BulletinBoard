@@ -95,7 +95,14 @@ public class MainController {
 
 	@RequestMapping(path="/createNew", method=RequestMethod.POST)
 	public String createNew(HttpServletRequest request, @ModelAttribute("categoryId") String categoryId, 
-			@ModelAttribute("title") String title, @ModelAttribute("body") String body){
+			@ModelAttribute("title") String title, @ModelAttribute("body") String body,
+			@ModelAttribute("categoryTitle") String categoryTitle) {
+		
+		if ( categoryId.length()==0 & categoryTitle.length()>0){
+			categoryId=String.valueOf(
+					category.addCategories(categoryTitle)
+					);
+		}
 		advertisement.addAdvertisement(user.findUser(this.getEmail(request)).getId(), title, body, Long.valueOf(categoryId));
 		return "index";		
 	
@@ -133,8 +140,8 @@ public class MainController {
 	public String createNewUser(@ModelAttribute("firstName") String firstName, @ModelAttribute("lastName") String lastName, @ModelAttribute("email") String email){
 		user.addUser(firstName, lastName, email);
 		return "index";
-		
 	}
+	
 	private String getEmail(HttpServletRequest request){
 		String email="";
 		Cookie[] cookies = request.getCookies();
@@ -147,4 +154,26 @@ public class MainController {
 	    }
 		return email;
 	}
+	
+	@RequestMapping(path="/manageCategory", method=RequestMethod.GET)
+	public ModelAndView manageCategory(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("manageCategory");
+		modelAndView.addObject("categoryList", category.getAllCategories());
+		return modelAndView;
+	}
+
+	@RequestMapping(path="/createCategory", method=RequestMethod.POST)
+	public String createCategory(@ModelAttribute("categoryTitle") String manageCategory){
+		category.addCategories(manageCategory);
+		return "index";
+	}
+	
+	@RequestMapping(path="/deleteCategory", method=RequestMethod.POST)
+	public String deleteCategory(@ModelAttribute("categoryId") String categoryId ){
+		category.removeCategories(Long.valueOf(categoryId));
+		return "index";
+	}
+
+
 }
