@@ -80,10 +80,9 @@ public class AdvertisementDaoHiberImpl implements AdvertisementDao{
 		return result;
 	}
 
-	public ArrayList<Advert> getFiltered(String usermail) {
+	public ArrayList<Advert> getFilteredByEmail(String usermail) {
 		UserDao user = new UserDaoImplHiber();
 		Long userId=user.findUser(usermail).getId();
-		
 		Transaction transaction = null;
 		Session session = null;
 		ArrayList<Advert> filteredAdvertList =null;
@@ -91,6 +90,42 @@ public class AdvertisementDaoHiberImpl implements AdvertisementDao{
 			session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
 			filteredAdvertList = (ArrayList<Advert>) session.createCriteria(Advert.class).add(Restrictions.eq("userId", userId)).list();
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return filteredAdvertList;
+	}
+	
+	public ArrayList<Advert> getFilteredByCategory(long categoryId) {
+		Transaction transaction = null;
+		Session session = null;
+		ArrayList<Advert> filteredAdvertList =null;
+		try {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			filteredAdvertList = (ArrayList<Advert>) session.createCriteria(Advert.class).add(Restrictions.eq("categoryId", categoryId)).list();
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return filteredAdvertList;
+	}
+	
+	public ArrayList<Advert> getFiltered(long categoryId, String email) {
+		UserDao user = new UserDaoImplHiber();
+		Long userId=user.findUser(email).getId();
+		Transaction transaction = null;
+		Session session = null;
+		ArrayList<Advert> filteredAdvertList =null;
+		try {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			filteredAdvertList = (ArrayList<Advert>) session.createCriteria(Advert.class).add(Restrictions.eq("userId", userId)).add(Restrictions.eq("categoryId", categoryId)).list();
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
@@ -117,5 +152,6 @@ public class AdvertisementDaoHiberImpl implements AdvertisementDao{
 		}
 		return advert;
 	}
+
 
 }

@@ -26,7 +26,9 @@ public class CategoryDaoHiberImplTest {
 	@Test
 	public void testRemoveCategories() {
 		CategoryDaoHiberImpl category = new CategoryDaoHiberImpl();
-		assertEquals(category.getAllCategories().get(0).getCategoryTitle(), category.removeCategories(1L));
+		category.addCategories("categoryForRemoving");
+		long categoryId=category.findCategory("categoryForRemoving");
+		assertEquals("categoryForRemoving",category.removeCategories(categoryId));
 	}
 	
 	@Test

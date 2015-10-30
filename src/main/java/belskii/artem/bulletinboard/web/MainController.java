@@ -23,8 +23,35 @@ public class MainController {
 	private AdvertisementDao advertisement = new AdvertisementDaoHiberImpl();
 	private CategoryDao category = new CategoryDaoHiberImpl();
 	@RequestMapping(path="/", method=RequestMethod.GET)
-	public String index(){
-		return "index";
+	public ModelAndView index(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("index");
+		modelAndView.addObject("categoryList", category.getAllCategories());
+		modelAndView.addObject("advertisements", advertisement.getAll());
+		return modelAndView;
+	}
+	
+	@RequestMapping(path="/filter", method=RequestMethod.POST)
+	public ModelAndView getFiltered(@ModelAttribute("email") String email, @ModelAttribute("categoryId") long categoryId){
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("index");
+		modelAndView.addObject("categoryList", category.getAllCategories());
+		
+		System.out.println("email " + email);
+		System.out.println(categoryId);
+		
+		if (email.length()>0 & categoryId >=0){
+			modelAndView.addObject("advertisements", advertisement.getFiltered(categoryId, email));
+		} else if (email.length()>0){
+			modelAndView.addObject("advertisements", advertisement.getFilteredByEmail(email));
+		} else if (categoryId >=0){
+			modelAndView.addObject("advertisements", advertisement.getFilteredByCategory(categoryId));
+		} else {
+			modelAndView.addObject("advertisements", advertisement.getAll());
+		}
+		
+		return modelAndView;
 	}
 	
 	@RequestMapping(path="/userHome", method=RequestMethod.POST)
@@ -38,7 +65,7 @@ public class MainController {
 		} else{
 			modelAndView.addObject("firstName", user.getFirstName(email));
 			modelAndView.addObject("lastName", user.getLastName(email));
-			modelAndView.addObject("myAdvertisement", advertisement.getFiltered(email));
+			modelAndView.addObject("myAdvertisement", advertisement.getFilteredByEmail(email));
 		}
 		modelAndView.addObject("email", email);
 		modelAndView.setViewName(userZone);
@@ -54,7 +81,7 @@ public class MainController {
 		modelAndView.setViewName("userHome");
 		modelAndView.addObject("firstName", user.getFirstName(email));
 		modelAndView.addObject("lastName", user.getLastName(email));
-		modelAndView.addObject("myAdvertisement", advertisement.getFiltered(email));
+		modelAndView.addObject("myAdvertisement", advertisement.getFilteredByEmail(email));
 		return modelAndView;
 	}
 
